@@ -4,7 +4,7 @@
 #include <math.h>
 #include <cuda.h>
 
-#define I 10
+#define I 5000
 #define J 2
 
 #define BLOCKSIZEx 512
