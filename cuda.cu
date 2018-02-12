@@ -15,7 +15,7 @@ double seq_time;
 
 /**---Host function declarations---**/
 int Blocks(int x, int b){ return ((x % b) != 0) ? (x / b + 1) : (x / b); }
-void getData(double *, double *);									// get dataset
+void getData(double *, double *, char name[]);								// get dataset
 void printTable(double *);
 
 /***-----Device function declarations-----***/
@@ -29,6 +29,12 @@ __global__ void kernel(int *, int *, double *, double *, double *);
 /****-------------Main programm-------------****/
 int main(int argc, char** argv)
 {
+	
+  if(argc != 2){
+    printf("Usage : No file name given...\n");
+    exit(0);
+  }
+	
   int i, l, k = 0, intsize = sizeof(int), doubsize = sizeof(double);					// k = neighbors for KNN algorithm
   int conv = 0;
   double *d_x, *d_y, *d_m;
@@ -45,7 +51,7 @@ int main(int argc, char** argv)
   y = (double *)malloc((I * J) * doubsize);
   m = (double *)malloc((I * J) * doubsize);
 
-  getData(x, y);
+  getData(x, y, argv[1]);
   //printTable(x);
   printf("\n");
 
@@ -88,17 +94,23 @@ int main(int argc, char** argv)
 
 
 /*****---------Host functions---------*****/
-void getData(double *x, double *y) {
+void getData(double *x, double *y, char name[]) {
   int i, j;
-  FILE *file = fopen("dataset.txt", "r");
-  for (i = 0; i < I; i++) {
-    for (j = 0; j < J; j++)
-    {
-      fscanf(file, "%lf", &x[i*J+j]);
-      y[i*J+j] = x[i*J+j];
-    }
+  FILE *file;
+  if((file = fopen(name, "r")) == NULL){
+    printf("File not found\n");
+    exit(1);
   }
-  fclose(file);
+  else{
+    for (i = 0; i < I; i++) {
+      for (j = 0; j < J; j++)
+      {
+	fscanf(file, "%lf", &x[i][j]);
+	y[i][j] = x[i][j];
+      }
+    }
+    fclose(file);
+  }
 }
 
 void printTable(double *x)
