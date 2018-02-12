@@ -105,8 +105,8 @@ void getData(double *x, double *y, char name[]) {
     for (i = 0; i < I; i++) {
       for (j = 0; j < J; j++)
       {
-	fscanf(file, "%lf", &x[i][j]);
-	y[i][j] = x[i][j];
+	fscanf(file, "%lf", &x[i*J+j]);				
+	y[i*J+j] = x[i*J+j];
       }
     }
     fclose(file);
