@@ -29,7 +29,7 @@ __global__ void kernel(int *, int *, double *, double *, double *);
 /****-------------Main programm-------------****/
 int main(int argc, char** argv)
 {
-	
+ 	
   if(argc != 2){
     printf("Usage : No file name given...\n");
     exit(0);
