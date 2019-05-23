@@ -1,4 +1,5 @@
-# Mean Shift using CUDA.
+# Mean Shift. 
+# https://en.wikipedia.org/wiki/Mean_shift
 
 To compile serial code -> <i>#gcc MeanShift.c -lm -O2, #./a.out</i>.
 
